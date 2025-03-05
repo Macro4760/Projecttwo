@@ -1,0 +1,24 @@
+server:
+  port: 8090
+  
+#jsp setting 
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .jsp
+  
+
+#mysql setting
+  datasource:
+    url: jdbc:mysql://db-324obn-kr.vpc-pub-cdb.ntruss.com:3306/studydb?serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: study
+    password: bitcamp!@#123
+
+#mybatis settings
+
+mybatis:
+  type-aliases-package: data.dto
+  mapper-locations:
+  - /mapper/**/*.xml
