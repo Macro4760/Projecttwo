@@ -17,7 +17,8 @@ public interface ChampMapper {
     public List<ChampionDto> findAllChampions();
     public int getChampionRating(String championId);
     public List<String> getChampionComments(String championId);
-    public void insertRating(Map<String, Object> ratingData);
     public void insertComment(Map<String, Object> commentData);
+    public int checkChampionExist(String championId);
+    public void insertChampionRating(Map<String, Object> ratingData);
     
 }

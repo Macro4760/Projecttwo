@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import data.dto.ChampionDto;
+import data.dto.RatingDto;
 import data.mapper.ChampMapper;
 
 
@@ -27,6 +28,7 @@ public class ChampService {
 	private final String DDRAGON_BASE_URL = "https://ddragon.leagueoflegends.com/cdn/14.4.1/data/ko_KR/";
 	private final RestTemplate restTemplate;
 	private final ChampMapper champMapper;
+	
 
 	public ChampService(RestTemplate restTemplate, ChampMapper championMapper) {
 		this.restTemplate = restTemplate;
@@ -114,11 +116,18 @@ public class ChampService {
 	}
 
 	// 평점 저장
-	public void saveRating(String championId, int rating) {
-		Map<String, Object> params = new HashMap<>();
-		params.put("championId", championId);
-		params.put("rating", rating);
-		champMapper.insertRating(params);
+	public void saveRating(Map<String, Object> ratingData) {
+	    // championId 값을 Map에서 꺼내기
+	    String championId = (String) ratingData.get("championId");
+
+	    // champion 테이블에 championId가 존재하는지 확인
+	    int count = champMapper.checkChampionExist(championId);
+	    if (count == 0) {
+	        throw new IllegalArgumentException("Invalid champion ID: " + championId);
+	    }
+
+	    // champion_id가 존재하면, champion_ratings 테이블에 데이터 삽입
+	    champMapper.insertChampionRating(ratingData);
 	}
 
 	// 댓글 저장
@@ -127,6 +136,12 @@ public class ChampService {
 		params.put("championId", championId);
 		params.put("comment", comment);
 		champMapper.insertComment(params);
+	}
+	public void insertChampionRating(int championId, double rating) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("championId", championId);
+	    params.put("rating", rating);
+	    champMapper.insertChampionRating(params);
 	}
 }
 

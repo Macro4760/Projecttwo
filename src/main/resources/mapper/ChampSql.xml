@@ -23,17 +23,17 @@
 		blurb, image
 		FROM champions
 	</select>
-	<select id="getChampionRating" parameterType="string"
-		resultType="int">
-		select avg(rating) from champion_ratings where
-		champion_id=#{championID}
-	</select>
-	<insert id="insertRating" parameterType="map">
-		insertInto
-		champion_ratings (champion_id,rating) values (#{championId},#{rating})
+	<select id="getChampionRating" resultType="ratingDto">
+        SELECT champion_id AS championId, rating
+        FROM champion_ratings
+        WHERE champion_id = #{championId}
+    </select>
+	<insert id="insertRating" parameterType="data.dto.RatingDto">
+   		INSERT INTO champion_ratings (champion_id, rating)
+    	VALUES (#{championId}, #{rating});
 	</insert>
 	<select id="getChampionComments" parameterType="String"
-		resultType="String">
+		resultType="List">
 		SELECT comment
 		FROM champion_comments
 		WHERE champion_id = #{championId}
@@ -41,8 +41,17 @@
 	</select>
 
 	<!-- 댓글 저장 -->
-	<insert id="insertComment" parameterType="map">
-		INSERT INTO champion_comments (champion_id, comment)
-		VALUES (#{championId}, #{comment})
+	<insert id="insertComment" parameterType="data.dto.CommentDto">
+    	INSERT INTO comments (champion_id, user_id, content, created_at)
+    	VALUES (#{championId}, #{userId}, #{content}, NOW())
+	</insert>
+	<select id="checkChampionExist" resultType="int">
+    	SELECT COUNT(*) 
+    	FROM champion 
+    	WHERE id = #{championId}
+	</select>	
+	<insert id="insertChampionRating" parameterType="map">
+    	INSERT INTO champion_ratings (champion_id, rating)
+    	VALUES (#{championId}, #{rating});
 	</insert>
 </mapper> 
