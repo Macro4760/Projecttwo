@@ -7,16 +7,17 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ChampMapper {
 
-    @Insert("INSERT INTO champion (id, name, title, blurb, image) VALUES (#{id}, #{name}, #{title}, #{blurb}, #{image})")
-    void insertChampion(ChampionDto champion);
-
-    @Select("SELECT * FROM champion WHERE id = #{id}")
-    ChampionDto findChampionById(String id);
-
-    @Select("SELECT * FROM champion")
-    List<ChampionDto> findAllChampions();
+    public void insertChampion(ChampionDto champion);
+    public ChampionDto findChampionById(String id);
+    public List<ChampionDto> findAllChampions();
+    public int getChampionRating(String championId);
+    public List<String> getChampionComments(String championId);
+    public void insertRating(Map<String, Object> ratingData);
+    public void insertComment(Map<String, Object> commentData);
+    
 }

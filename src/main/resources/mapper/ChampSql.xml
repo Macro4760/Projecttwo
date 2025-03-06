@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "../dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.ChampMapper">
+
+	<insert id="insertChampion" parameterType="data.dto.ChampionDto">
+		INSERT INTO champions
+		(id, name, title, blurb, image)
+		VALUES (#{id}, #{name}, #{title},
+		#{blurb}, #{image})
+	</insert>
+
+	<!-- champion ID로 ChampionDto를 조회하는 SQL -->
+	<select id="findChampionById" resultType="data.dto.ChampionDto">
+		SELECT id, name, title,
+		blurb, image
+		FROM champions
+		WHERE id = #{id}
+	</select>
+
+	<!-- 모든 champion 데이터를 조회하는 SQL -->
+	<select id="findAllChampions" resultType="data.dto.ChampionDto">
+		SELECT id, name, title,
+		blurb, image
+		FROM champions
+	</select>
+	<select id="getChampionRating" parameterType="string"
+		resultType="int">
+		select avg(rating) from champion_ratings where
+		champion_id=#{championID}
+	</select>
+	<insert id="insertRating" parameterType="map">
+		insertInto
+		champion_ratings (champion_id,rating) values (#{championId},#{rating})
+	</insert>
+	<select id="getChampionComments" parameterType="String"
+		resultType="String">
+		SELECT comment
+		FROM champion_comments
+		WHERE champion_id = #{championId}
+		ORDER BY created_at DESC
+	</select>
+
+	<!-- 댓글 저장 -->
+	<insert id="insertComment" parameterType="map">
+		INSERT INTO champion_comments (champion_id, comment)
+		VALUES (#{championId}, #{comment})
+	</insert>
+</mapper> 

@@ -1,13 +1,20 @@
 package data.service;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,58 +24,111 @@ import data.mapper.ChampMapper;
 
 @Service
 public class ChampService {
-    private final String DDRAGON_BASE_URL = "https://ddragon.leagueoflegends.com/cdn/14.4.1/data/ko_KR/";
-    private final RestTemplate restTemplate;
-    private final ChampMapper champMapper;
+	private final String DDRAGON_BASE_URL = "https://ddragon.leagueoflegends.com/cdn/14.4.1/data/ko_KR/";
+	private final RestTemplate restTemplate;
+	private final ChampMapper champMapper;
 
-    public ChampService(RestTemplate restTemplate, ChampMapper championMapper) {
-        this.restTemplate = restTemplate;
-        this.champMapper = championMapper;
-    }
+	public ChampService(RestTemplate restTemplate, ChampMapper championMapper) {
+		this.restTemplate = restTemplate;
+		this.champMapper = championMapper;
+	}
 
-    // 전체 챔피언 데이터 가져오기
-    public List<ChampionDto> fetchChampions() {
-        String url = DDRAGON_BASE_URL + "champion.json";
-        String json = restTemplate.getForObject(url, String.class);
+	public List<ChampionDto> fetchChampions() {
+		// JSON 파일 경로
+		String jsonFilePath = "classpath:championfull.json"; // championfull.json을 사용
 
-        List<ChampionDto> champions = new ArrayList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
+		// JSON 데이터를 읽어오는 로직
+		String json = "";
+		try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("championfull.json")) {
+			if (inputStream != null) {
+				json = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+			} else {
+				System.out.println("Error: championfull.json file not found.");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-        try {
-            JsonNode root = objectMapper.readTree(json).get("data");
-            Iterator<String> fieldNames = root.fieldNames();
+		// champions 리스트 생성
+		List<ChampionDto> champions = new ArrayList<>();
+		ObjectMapper objectMapper = new ObjectMapper();
 
-            while (fieldNames.hasNext()) {
-                String champId = fieldNames.next();
-                JsonNode champData = root.get(champId);
+		try {
+			JsonNode root = objectMapper.readTree(json).get("data");
+			Iterator<String> fieldNames = root.fieldNames();
 
-                ChampionDto champion = new ChampionDto(
-                        champData.get("id").asText(),
-                        champData.get("name").asText(),
-                        champData.get("title").asText(),
-                        champData.get("blurb").asText(),
-                        "https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/" + champId + ".png"
-                );
+			while (fieldNames.hasNext()) {
+				String champId = fieldNames.next();
+				JsonNode champData = root.get(champId);
 
-                champions.add(champion);
-                champMapper.insertChampion(champion);
-            }
+				// ChampionDto 생성
+				ChampionDto champion = ChampionDto.builder()
+						.id(champData.get("id").asText())
+						.name(champData.get("name").asText())
+						.title(champData.get("title").asText())
+						.blurb(champData.get("blurb").asText())
+						.image("https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/" + champData.get("id").asText() + ".png")
+						.skillQ(champData.get("id").asText() + "Q")
+						.skillQName(champData.get("spells").get(0).get("name").asText())
+						.skillQDescription(champData.get("spells").get(0).get("description").asText())
+						.skillQImage(champData.get("spells").get(0).get("id").asText() + ".png")
+						.skillW(champData.get("id").asText() + "W")
+						.skillWName(champData.get("spells").get(1).get("name").asText())
+						.skillWDescription(champData.get("spells").get(1).get("description").asText())
+						.skillWImage(champData.get("spells").get(1).get("id").asText() + ".png")
+						.skillE(champData.get("id").asText() + "E")
+						.skillEName(champData.get("spells").get(2).get("name").asText())
+						.skillEDescription(champData.get("spells").get(2).get("description").asText())
+						.skillEImage(champData.get("spells").get(2).get("id").asText() + ".png")
+						.skillR(champData.get("id").asText() + "R")
+						.skillRName(champData.get("spells").get(3).get("name").asText())
+						.skillRDescription(champData.get("spells").get(3).get("description").asText())
+						.skillRImage(champData.get("spells").get(3).get("id").asText() + ".png")
+						.build();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+				// champions 리스트에 추가
+				champions.add(champion);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-        return champions;
-    }
+		return champions;
+	}
 
-    // 특정 챔피언 상세 정보 가져오기
-    public String getChampionDetail(String championName) {
-        String url = DDRAGON_BASE_URL + "champion/" + championName + ".json";
-        return restTemplate.getForObject(url, String.class);
-    }
+	public ChampionDto getChampionById(String championId) {
+		List<ChampionDto> champions = fetchChampions();
+		return champions.stream()
+				.filter(champion -> champion.getId().equals(championId))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("Champion not found"));
+	}
 
-    // DB에서 챔피언 목록 가져오기
-    public List<ChampionDto> getStoredChampions() {
-        return champMapper.findAllChampions();
-    }
+	public ChampionDto getChampionWithRatingAndComments(String championId) {
+		ChampionDto champion = champMapper.findChampionById(championId);
+		if (champion != null) {
+			champion.setRating(champMapper.getChampionRating(championId));  // 평점 조회
+			champion.setComments(champMapper.getChampionComments(championId));  // 댓글 조회
+		}
+		return champion;
+	}
+
+	// 평점 저장
+	public void saveRating(String championId, int rating) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("championId", championId);
+		params.put("rating", rating);
+		champMapper.insertRating(params);
+	}
+
+	// 댓글 저장
+	public void saveComment(String championId, String comment) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("championId", championId);
+		params.put("comment", comment);
+		champMapper.insertComment(params);
+	}
 }
+
+
+
