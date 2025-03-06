@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>Projecttwo</artifactId>
+	<artifactId>SpringMybatisMvc3</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Projecttwo</name>
+	<name>SpringMybatisMvc3</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -31,37 +31,14 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-		<dependency> 
-              <groupId>org.apache.tomcat.embed</groupId> 
-              <artifactId>tomcat-embed-jasper</artifactId> 
-              <scope>provided</scope> 
-      </dependency>
-      <dependency>
-         <groupId>jakarta.servlet</groupId>
-         <artifactId>jakarta.servlet-api</artifactId>
-         <version>6.0.0</version>
-         <scope>provided</scope>
-      </dependency>
-
-      <dependency>
-         <groupId>jakarta.servlet.jsp.jstl</groupId>
-         <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-         <version>3.0.0</version>
-      </dependency>
-
-      <dependency>
-         <groupId>org.glassfish.web</groupId>
-         <artifactId>jakarta.servlet.jsp.jstl</artifactId>
-         <version>3.0.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mybatis.spring.boot</groupId>
-        <artifactId>mybatis-spring-boot-starter</artifactId>
-        <version>2.1.4</version>
-</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>3.0.4</version>
 		</dependency>
 
 		<dependency>
@@ -69,6 +46,11 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<!--<scope>runtime</scope>-->
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -85,6 +67,47 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter-test</artifactId>
+			<version>3.0.4</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!--add-->
+		<dependency> 
+           	<groupId>org.apache.tomcat.embed</groupId> 
+           	<artifactId>tomcat-embed-jasper</artifactId> 
+           	<scope>provided</scope> 
+		</dependency>
+		<dependency>
+         <groupId>jakarta.servlet</groupId>
+         <artifactId>jakarta.servlet-api</artifactId>
+         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>jakarta.servlet.jsp.jstl</groupId>
+         <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+      </dependency>
+
+      <dependency>
+         <groupId>org.glassfish.web</groupId>
+         <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+      </dependency>
+      
+      <!--naver s3 storage-->
+      <dependency>
+		    <groupId>io.awspring.cloud</groupId>
+		    <artifactId>spring-cloud-starter-aws</artifactId>
+		    <version>2.4.4</version>
+	 </dependency>
+	 <dependency>
+			    <groupId>com.amazonaws</groupId>
+			    <artifactId>aws-java-sdk-s3</artifactId>
+			    <version>1.12.416</version>
+	 </dependency>
+
 	</dependencies>
 
 	<build>

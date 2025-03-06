@@ -1,19 +1,12 @@
 package data.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import data.dto.UserDto;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-    void insertUser(UserDto user);
-    UserDto getUserByEmail(@RequestParam("email") String email);
-    UserDto getUserByNickname(@RequestParam("nickname") String nickname);
-    void updateUser(UserDto user);
-    void deleteUser(@RequestParam("id") int id);
-    List<UserDto> getAllUsers();
+    void insertUser(UserDto dto); // 회원가입
+    UserDto getUserByEmail(String email); // 이메일로 회원 조회
+    int checkEmail(String email); // 이메일 중복 체크
+    int loginCheck(String email, String password); // 로그인 체크
 }

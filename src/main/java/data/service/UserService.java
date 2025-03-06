@@ -1,40 +1,33 @@
 package data.service;
 
-import java.util.List;
-
+import data.dto.UserDto;
+import data.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import data.dto.UserDto;
-import data.mapper.UserMapper;
-
 @Service
 public class UserService {
-    
+
     @Autowired
     private UserMapper userMapper;
 
-    public void registerUser(UserDto userDto) {
-        userMapper.insertUser(userDto);
+    // 회원가입
+    public void insertUser(UserDto dto) {
+        userMapper.insertUser(dto);
     }
 
+    // 이메일 중복 체크
+    public boolean isEmailCheck(String email) {
+        return userMapper.checkEmail(email) == 1;
+    }
+
+    // 로그인 체크
+    public boolean loginCheck(String email, String password) {
+        return userMapper.loginCheck(email, password) == 1;
+    }
+
+    // 이메일로 회원 정보 조회
     public UserDto getUserByEmail(String email) {
         return userMapper.getUserByEmail(email);
-    }
-
-    public UserDto getUserByNickname(String nickname) {
-        return userMapper.getUserByNickname(nickname);
-    }
-
-    public void updateUser(UserDto userDto) {
-        userMapper.updateUser(userDto);
-    }
-
-    public void deleteUser(int id) {
-        userMapper.deleteUser(id);
-    }
-    
-    public List<UserDto> getAllUsers() {
-        return userMapper.getAllUsers();
     }
 }
