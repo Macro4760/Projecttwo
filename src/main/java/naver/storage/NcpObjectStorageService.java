@@ -19,6 +19,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 
 @Service
 public class NcpObjectStorageService implements ObjectStorageService {
+
 	AmazonS3 s3;
 	
 	public NcpObjectStorageService(NaverConfig naverConfig) {
@@ -77,3 +78,7 @@ public class NcpObjectStorageService implements ObjectStorageService {
 	}
 
 }
+
+	
+	
+
