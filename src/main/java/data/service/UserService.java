@@ -30,4 +30,23 @@ public class UserService {
     public UserDto getUserByEmail(String email) {
         return userMapper.getUserByEmail(email);
     }
+    
+    public UserDto getUserById(int id)
+    {
+    	return userMapper.getUserById(id);
+    }
+    // 회원 수정
+    public void updateUser(UserDto user) {
+        userMapper.updateUser(user);
+    }
+
+    // 회원 삭제
+    public void deleteUser(int id) {
+        userMapper.deleteUser(id);
+    }
+    
+    public void changePhoto(String photo,int id)
+    {
+    	userMapper.changePhoto(photo, id);
+    }
 }

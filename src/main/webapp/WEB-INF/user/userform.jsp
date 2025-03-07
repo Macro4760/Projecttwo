@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -104,12 +106,18 @@
        
          <!-- 타이틀 섹션 -->
         <div class="w-full bg-blue-900 text-white py-6">
-            <h2 class="text-4xl font-semibold text-center">이메일 중복 체크</h2>
+            <h2 class="text-4xl font-semibold text-center">회원 가입</h2>
         </div>
 
         <!-- 회원가입 폼 섹션 -->
-        <form action="/signup" method="post" enctype="multipart/form-data" onsubmit="return check()">
+        <form action="./insert" method="post" enctype="multipart/form-data" onsubmit="return check()">
         <div class="bg-white shadow-lg rounded-lg p-8 mt-8 w-full max-w-lg">
+            <!-- 닉네임 입력 폼 추가 -->
+            <div class="mb-6">
+                <label for="nickname" class="block text-xl font-medium text-gray-700">닉네임</label>
+                <input type="text" id="nickname" name="nickname" class="mt-2 p-4 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="닉네임을 입력하세요" required>
+            </div>
+
             <div class="mb-6">
                 <label for="email" class="block text-xl font-medium text-gray-700">이메일 주소</label>
                 <div class="flex items-center">
@@ -122,7 +130,7 @@
             <!-- 비밀번호 입력 폼 -->
             <div class="mb-6">
                 <label for="password" class="block text-xl font-medium text-gray-700">비밀번호</label>
-                <input type="password" id="password" name="password1" class="mt-2 p-4 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="비밀번호를 입력하세요" required>
+                <input type="password" id="password" name="password" class="mt-2 p-4 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="비밀번호를 입력하세요" required>
             </div>
 
             <div class="mb-6">
@@ -132,8 +140,31 @@
 
             <!-- 프로필 사진 업로드 -->
             <div class="mb-6">
-                <label for="profilePic" class="block text-xl font-medium text-gray-700">프로필 사진</label>
-                <input type="file" id="profilePic" name="profilePic" class="mt-2 p-4 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <label for="profilePhoto" class="block text-xl font-medium text-gray-700">프로필 사진</label>
+                <input type="file" id="profilePhoto" name="upload" class="mt-2 p-4 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                onchange="preview(this)">
+                <br>
+                <img src="" id="showimg" onerror="this.src='https://kr.object.ncloudstorage.com/bitcamp.bucket/user/noimage.png'">
+						
+						<!-- 파일 선택시 제이쿼리로 미리보기 코드 -->
+						<script>
+							function preview(tag)
+							{
+								let f=tag.files[0];
+								if(!f.type.match("image.*")){
+									alert("이미지 파일만 가능합니다");
+									return;
+								}
+								
+								if(f){
+									let reader=new FileReader();
+									reader.onload=function(e){
+										$("#showimg").attr("src",e.target.result);
+									}
+									reader.readAsDataURL(f);
+								}
+							}
+						</script>
             </div>
 
             <div class="flex items-center justify-between">

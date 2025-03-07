@@ -22,5 +22,20 @@
     <select id="loginCheck" parameterType="map" resultType="int">
         SELECT COUNT(*) FROM users WHERE email = #{email} AND password = #{password};
     </select>
-
+    
+    <!-- 수정 -->
+	 <update id="updateUser" parameterType="data.dto.UserDto">
+        UPDATE users SET nickname = #{nickname}, password = #{password}, photo = #{photo} WHERE id = #{id}
+    </update>
+    <update id="changePhoto" parameterType="Map">
+		update users set photo=#{photo} where id=#{id}
+	</update>
+	<!-- 삭제 -->
+	  <delete id="deleteUser" parameterType="Integer">
+        DELETE FROM users WHERE id=#{id}
+    </delete>
+    
+    <select id="getUserById" parameterType="int" resultType="data.dto.UserDto">
+        SELECT * FROM users WHERE id = #{id}
+    </select>
 </mapper>
