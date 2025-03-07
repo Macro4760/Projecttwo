@@ -3,7 +3,7 @@
 <mapper namespace="data.mapper.ChampMapper">
 
 	<insert id="insertChampion" parameterType="data.dto.ChampionDto">
-		INSERT INTO champions
+		INSERT INTO champion
 		(id, name, title, blurb, image)
 		VALUES (#{id}, #{name}, #{title},
 		#{blurb}, #{image})
@@ -13,7 +13,7 @@
 	<select id="findChampionById" resultType="data.dto.ChampionDto">
 		SELECT id, name, title,
 		blurb, image
-		FROM champions
+		FROM champion
 		WHERE id = #{id}
 	</select>
 
@@ -32,26 +32,33 @@
    		INSERT INTO champion_ratings (champion_id, rating)
     	VALUES (#{championId}, #{rating});
 	</insert>
-	<select id="getChampionComments" parameterType="String"
-		resultType="List">
-		SELECT comment
-		FROM champion_comments
-		WHERE champion_id = #{championId}
-		ORDER BY created_at DESC
+	<select id="getChampionComments" parameterType="String" resultType="data.dto.CommentDto">
+    	SELECT comment, created_at AS createdAt
+    	FROM champion_comments
+    	WHERE champion_id = #{championId}
+    	ORDER BY created_at DESC
 	</select>
 
 	<!-- 댓글 저장 -->
 	<insert id="insertComment" parameterType="data.dto.CommentDto">
-    	INSERT INTO comments (champion_id, user_id, content, created_at)
-    	VALUES (#{championId}, #{userId}, #{content}, NOW())
+    	INSERT INTO champion_comments (champion_id, comment, created_at)
+    	VALUES (#{championId}, #{comment}, NOW())
 	</insert>
 	<select id="checkChampionExist" resultType="int">
     	SELECT COUNT(*) 
     	FROM champion 
     	WHERE id = #{championId}
 	</select>	
-	<insert id="insertChampionRating" parameterType="map">
-    	INSERT INTO champion_ratings (champion_id, rating)
-    	VALUES (#{championId}, #{rating});
-	</insert>
+	
+	<select id="getChampionRatingStats" resultType="map">
+    	SELECT COUNT(*) AS ratingCount, IFNULL(AVG(rating), 0) AS avgRating FROM champion_ratings WHERE champion_id = #{championId}
+	</select>
+	<select id="getRatingStats" parameterType="String" resultType="map">
+        SELECT COUNT(*) AS ratingCount, IFNULL(AVG(rating), 0) AS avgRating
+        FROM champion_ratings
+        WHERE champion_id = #{championId}
+    </select>
+	
+	
+	
 </mapper> 

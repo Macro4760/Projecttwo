@@ -14,5 +14,8 @@ import java.util.Map;
 public interface RatingMapper {
 
     
-    void insertRating(RatingDto ratingDto);
+    public void insertRating(RatingDto ratingDto);
+    public double getAverageRating(Map<String, Object> params);
+    public int getRatingCount(Map<String, Object> params);
+    public int saveRating(RatingDto rating);
 }

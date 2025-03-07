@@ -7,9 +7,10 @@ import lombok.Data;
 
 @Data
 @Builder
-@Alias("commentDto")
+@Alias("CommentDto")
 public class CommentDto {
-	 	private String championId;
-	    private String userId;
-	    private String content;
+	private String championId;
+	private String userId;
+	private String comment;
+	private String createdAt;  // 댓글 생성 시간
 }

@@ -27,12 +27,25 @@ import data.mapper.CommentMapper;
 
 @Service
 public class CommentService {
-	@Autowired
-    private CommentMapper commentMapper;
 
-    public void addComment(CommentDto commentDto) {
-        commentMapper.insertComment(commentDto);  // MyBatis 매퍼 메서드를 호출해 DB에 댓글 추가
+    private CommentMapper commentMapper;
+	
+	@Autowired
+	public CommentService(CommentMapper commentMapper) {
+		this.commentMapper = commentMapper;
+	}
+
+	public void insertComment(CommentDto commentDto) {
+        commentMapper.insertComment(commentDto);  // DB에 댓글 추가
     }
+	
+
+    // 챔피언에 해당하는 댓글 목록을 가져오는 메서드
+    public List<CommentDto> getCommentsByChampionId(String championId) {
+        return commentMapper.selectCommentByChampionId(championId);
+    }
+
+   
 }
 
 

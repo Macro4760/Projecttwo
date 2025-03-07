@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "../dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mapper.RatingMapper">
-	<insert id="insertRating" parameterType="data.dto.RatingDto">
-        INSERT INTO ratings (champion_id, rating, user_id)
-        VALUES (#{championId}, #{rating}, #{userId})
+	<insert id="insertRating" parameterType="RatingDto">
+        INSERT INTO champion_ratings (champion_id, rating)
+        VALUES (#{championId}, #{rating})
     </insert>
+    <select id="getAverageRating" parameterType="map" resultType="double">
+    SELECT AVG(rating) FROM champion_ratings WHERE champion_id = #{championId}
+</select>
+    <select id="getRatingCount" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM champion_ratings WHERE champion_id = #{championId}
+</select>
+	
 </mapper> 

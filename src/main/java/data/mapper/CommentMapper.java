@@ -12,9 +12,12 @@ import java.util.Map;
 
 @Mapper
 public interface CommentMapper {
-	
-	public void insertComment(CommentDto commentDto);
-    public List<CommentDto> selectCommentByChampionId(String championId);
 
-    
+	public void insertComment(CommentDto commentDto);  // 댓글을 추가하는 메서드
+	public List<CommentDto> selectCommentByChampionId(String championId);
+	
+    public ChampionDto getChampionById(String championId);
+
+
+
 }

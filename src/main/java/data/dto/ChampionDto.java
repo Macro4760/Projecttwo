@@ -41,7 +41,7 @@ public class ChampionDto {
     private String skillRImage;
 
     private int rating;
-    private List<String> comments;
+    private List<CommentDto> comments; 
     
     
 }
