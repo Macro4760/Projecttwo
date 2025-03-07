@@ -110,7 +110,7 @@
 					</script>
 					<b class="ml-2 font-semibold">${sessionScope.loginnickname}</b>
 				</c:if>
-				<li><a href="/champions" class="hover:text-blue-300">챔피언</a></li>
+				<li><a href="/champion/list" class="hover:text-blue-300">챔피언</a></li>
 				<li><c:if test="${sessionScope.loginstatus==null}">
 						<span data-bs-toggle="modal" data-bs-target="#myLoginModal"
 							style="cursor: pointer;">로그인</span>
