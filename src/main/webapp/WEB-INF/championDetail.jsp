@@ -228,6 +228,7 @@ textarea {
 </head>
 
 <body>
+<%-- <jsp:include page="../layout/title.jsp"></jsp:include> --%>
 	<div class="container">
 		<div class="champion-header">
 			<img

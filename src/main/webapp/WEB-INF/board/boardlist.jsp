@@ -34,39 +34,41 @@
 </head>
 <body>
 <jsp:include page="../../layout/title.jsp"></jsp:include>
-    <div class="container mx-auto p-4">
-        <div class="text-center">
-            <h1 class="text-2xl font-bold">공지사항</h1>
-        </div>
-		  <!-- 작성하기 버튼 (누구나 볼 수 있도록 설정) -->
+   <div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4">게시판</h2>
+
+    <!-- ✅ "작성하기" 버튼 (모든 사용자에게 보이도록 변경) -->
     <div class="flex justify-end mb-4">
-        <a href="/notice/form" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <a href="/board/form" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             작성하기
         </a>
     </div>
-        <h2 class="text-xl mt-6">게시글 목록</h2>
-        <table class="min-w-full mt-4 table-auto border-collapse">
-            <thead>
-                <tr class="bg-gray-200">
-                    <th class="border px-4 py-2">번호</th>
-                    <th class="border px-4 py-2">제목</th>
-                    <th class="border px-4 py-2">작성자</th>
-                    <th class="border px-4 py-2">작성일</th>
+
+    <!-- 게시판 목록 테이블 -->
+    <table class="w-full border-collapse border border-gray-300">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="border border-gray-300 px-4 py-2">글번호</th>
+                <th class="border border-gray-300 px-4 py-2">글제목</th>
+                <th class="border border-gray-300 px-4 py-2">작성자</th>
+                <th class="border border-gray-300 px-4 py-2">작성일자</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="board" items="${boardlist}">
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2 text-center">${nboard.idx}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        <a href="/board/view?idx=${nboard.idx}" class="text-blue-600 hover:underline">
+                            ${nboard.title}
+                        </a>
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2 text-center">${nboard.nickname}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-center">${nboard.created_at}</td>
                 </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="board" items="${allBoards}">
-                    <tr>
-                        <td class="border px-4 py-2">${board.id}</td>
-                        <td class="border px-4 py-2">
-                            <a href="/board/view/${board.id}" class="text-blue-500">${board.title}</a>
-                        </td>
-                        <td class="border px-4 py-2">${board.author}</td>
-                        <td class="border px-4 py-2">${board.createdAt}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </div>
+            </c:forEach>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

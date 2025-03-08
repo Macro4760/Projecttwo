@@ -76,8 +76,8 @@
         }
     </style>
 </head>
-
 <body>
+	<jsp:include page="../layout/title.jsp"></jsp:include>
     <h1>Champion List</h1>
     <div class="champion-list">
         <c:forEach var="champion" items="${championList}">
