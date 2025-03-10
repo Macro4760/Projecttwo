@@ -11,7 +11,7 @@ import data.dto.SummonerDto;
 public interface SummonerMapper {
 	public SummonerDto getSummonerInfo(String summonerName);
 
-	public List<MatchDto> getRecentMatches(String summonerId);
+	public List<MatchDto> getRecentMatches(String puuid);
 
 	public MatchDto getMatchDetails(String matchId);
 

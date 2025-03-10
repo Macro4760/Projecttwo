@@ -1,5 +1,6 @@
 package data.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
@@ -20,6 +21,6 @@ public class MatchDto {
     private int kills;
     private int deaths;
     private int assists;
-    private Date date; // Date 타입으로 수정 (DATETIME)
+    private LocalDateTime date; // LocalDateTime으로 변경
 }
 

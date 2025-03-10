@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "../dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.CommentMapper">
+
+	
+	<insert id="insertComment" parameterType="data.dto.CommentDto">
+    	INSERT INTO champion_comments (champion_id, user_id, comment,created_at)
+    	VALUES (#{championId}, #{userId}, #{comment},now())
+	</insert>
+	<select id="selectCommentByChampionId" parameterType="java.lang.Integer" resultType="CommentDto">
+	    SELECT cchampion_id, user_id, comment, created_at
+	    FROM champion_comments
+	    WHERE champion_id = #{championId}
+	</select>
+	
+	<select id="getCommentsByChampionId" resultType="CommentDto">
+    	SELECT * FROM champion_comments WHERE champion_id = #{championId}
+	</select>
+</mapper> 

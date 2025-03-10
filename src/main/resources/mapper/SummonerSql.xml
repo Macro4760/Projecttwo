@@ -4,32 +4,31 @@
  <!-- 공지글 조회 -->
     <!-- 소환사 정보 가져오기 -->
     <select id="getSummonerInfo" parameterType="String" resultType="data.dto.SummonerDto">
-	    SELECT id, name, profileIconId, summonerLevel
+	    SELECT summoner_id, summoner_name, profile_Icon_Id, summoner_Level
 	    FROM summoner_info
-	    WHERE name = #{summonerName}
+	    WHERE summoner_name = #{summonerName}
 	</select>
     
-    <!-- 최근 게임 기록 가져오기 -->
-    <select id="getRecentMatches" resultType="data.dto.MatchDto">
+    <!-- 최근 게임 기록 가져오기 (PUUID 기준) -->
+	<select id="getRecentMatches" resultType="data.dto.MatchDto">
 	    SELECT match_id AS matchId, champion_id AS championId, kills, deaths, assists, win
 	    FROM match_detail
-	    WHERE summoner_id = #{summonerId}
+	    WHERE puuid = #{puuid}  <!-- summoner_id 대신 puuid 사용 -->
 	    ORDER BY date DESC
 	    LIMIT 10
 	</select>
 
-    
     <!-- 게임 상세 정보 가져오기 -->
     <select id="getMatchDetails" parameterType="String" resultType="data.dto.SummonerDto">
-        SELECT championId, kills, deaths, assists, win
+        SELECT champion_id, kills, deaths, assists, win
         FROM match_detail
-        WHERE matchId = #{matchId}
+        WHERE match_Id = #{matchId}
     </select>
 
     <!-- 승률 계산을 위한 통계 -->
     <select id="getWinRate" parameterType="String" resultType="double">
-        SELECT (COUNT(*) * 100.0) / (SELECT COUNT(*) FROM match_detail WHERE summonerId = #{summonerId}) AS winRate
+	    SELECT (COUNT(*) * 100.0) / (SELECT COUNT(*) FROM match_detail WHERE summoner_id = #{summonerId}) AS winRate
 	    FROM match_detail
-	    WHERE summonerId = #{summonerId} AND result = 'Win'
-    </select>
+	    WHERE summoner_id = #{summonerId} AND result = 'Win'
+	</select>
 </mapper>
