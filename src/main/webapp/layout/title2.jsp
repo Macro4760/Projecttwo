@@ -86,7 +86,7 @@
 </div>
 
 <!-- 네비게이션 바 -->
-	<nav class="bg-blue-900 text-white p-4 shadow-lg">
+	<nav class="bg-blue-900 text-black p-4 shadow-lg">
 		<div class="container mx-auto flex items-center justify-between">
 			<img src="https://kr.object.ncloudstorage.com/bitcamp.bucket/logo/logo2.webp" alt="Logo" class="h-12 mr-4">
 

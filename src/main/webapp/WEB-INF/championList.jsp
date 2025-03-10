@@ -78,10 +78,18 @@
 </head>
 
 <body>
+<jsp:include page="../layout/title.jsp"/>
     <h1>Champion List</h1>
-    <div class="champion-list">
+
+    <!-- 검색 입력 필드 -->
+    <div style="text-align: center; margin-bottom: 20px;">
+        <input type="text" id="searchInput" placeholder="챔피언 이름 검색" onkeyup="filterChampions()" 
+               style="padding: 10px; width: 300px; font-size: 1em; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+
+    <div class="champion-list" id="championList">
         <c:forEach var="champion" items="${championList}">
-            <div class="champion-card">
+            <div class="champion-card" data-name="${champion.name}">
                 <a href="/champion/detail/${champion.id}">
                     <img src="https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/${champion.image}" alt="${champion.name}" />
                     <div class="champion-name">${champion.name}</div>
@@ -90,6 +98,23 @@
             </div>
         </c:forEach>
     </div>
+
+    <script>
+        function filterChampions() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let cards = document.querySelectorAll(".champion-card");
+
+            cards.forEach(card => {
+                let name = card.getAttribute("data-name").toLowerCase();
+                if (name.includes(input)) {
+                    card.style.display = "block";  // 검색어 포함 시 표시
+                } else {
+                    card.style.display = "none";   // 검색어 없으면 숨김
+                }
+            });
+        }
+    </script>
 </body>
+
 
 </html>

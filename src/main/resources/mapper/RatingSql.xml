@@ -5,11 +5,19 @@
         INSERT INTO champion_ratings (champion_id, rating)
         VALUES (#{championId}, #{rating})
     </insert>
-    <select id="getAverageRating" parameterType="map" resultType="double">
-    SELECT AVG(rating) FROM champion_ratings WHERE champion_id = #{championId}
-</select>
-    <select id="getRatingCount" parameterType="map" resultType="int">
-    SELECT COUNT(*) FROM champion_ratings WHERE champion_id = #{championId}
-</select>
+     <select id="getAverageRating" resultType="java.lang.Double">
+        SELECT AVG(rating)
+        FROM champion_ratings
+        WHERE champion_id = #{championId}
+    </select>
+
+    <!-- 평점 개수 구하기 -->
+    <select id="getRatingCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) 
+        FROM champion_ratings
+        WHERE champion_id = #{championId}
+    </select>
+
+	
 	
 </mapper> 

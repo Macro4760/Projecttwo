@@ -17,7 +17,8 @@ public interface CommentMapper {
 	public List<CommentDto> selectCommentByChampionId(String championId);
 	
     public ChampionDto getChampionById(String championId);
-
+    
+    public int deleteComment(int id);
 
 
 }

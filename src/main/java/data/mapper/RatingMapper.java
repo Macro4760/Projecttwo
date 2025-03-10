@@ -5,6 +5,7 @@ import data.dto.RatingDto;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -15,7 +16,9 @@ public interface RatingMapper {
 
     
     public void insertRating(RatingDto ratingDto);
-    public double getAverageRating(Map<String, Object> params);
-    public int getRatingCount(Map<String, Object> params);
+    Double getAverageRating(@Param("championId") String championId);  // 평균 평점 가져오기
+    Integer getRatingCount(@Param("championId") String championId);  // 평점 개수 가져오기
     public int saveRating(RatingDto rating);
+    
+
 }

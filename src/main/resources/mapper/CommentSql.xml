@@ -7,13 +7,21 @@
     	INSERT INTO champion_comments (champion_id, user_id, comment,created_at)
     	VALUES (#{championId}, #{userId}, #{comment},now())
 	</insert>
-	<select id="selectCommentByChampionId" parameterType="java.lang.Integer" resultType="CommentDto">
-	    SELECT cchampion_id, user_id, comment, created_at
-	    FROM champion_comments
-	    WHERE champion_id = #{championId}
+	<select id="selectCommentByChampionId" parameterType="java.lang.String" resultType="CommentDto">
+	    SELECT 
+	    	id,
+	        champion_id AS championId, 
+	        user_id AS userId, 
+	        comment, 
+	        created_at AS createdAt
+    	FROM champion_comments
+    	WHERE champion_id = #{championId}
 	</select>
 	
 	<select id="getCommentsByChampionId" resultType="CommentDto">
     	SELECT * FROM champion_comments WHERE champion_id = #{championId}
 	</select>
+	<delete id="deleteComment" parameterType="int">
+    	DELETE FROM champion_comments WHERE id = #{id}
+</delete>
 </mapper> 

@@ -3,6 +3,7 @@ package Champ.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -89,6 +91,13 @@ public class RiotChampionController {
 	 @GetMapping("/detail/{championId}")
 	    public String getChampionDetail(@PathVariable String championId, Model model) throws IOException {
 	        // JSON 파일에서 챔피언 정보 가져오기
+		// 평균 평점과 평점 개수 가져오기
+		 	Double avgRating = ratingService.getAverageRating(championId);
+		 	Integer ratingCount = ratingService.getRatingCount(championId);
+
+	        // null 처리, 값이 없으면 기본값(0.0, 0명 참여)으로 설정
+	        model.addAttribute("avgRating", (avgRating != null ? avgRating : 0.0));
+	        model.addAttribute("ratingCount", (ratingCount != null ? ratingCount : 0));
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        File file = new File(Champion_File);
 	        Map<String, Map<String, Object>> json = objectMapper.readValue(file, Map.class);
@@ -191,18 +200,43 @@ public class RiotChampionController {
 	 	    commentMapper.insertComment(commentDto);
 	 	    return ResponseEntity.ok("댓글이 등록되었습니다.");
 	 	}
+	 	
 	 	@GetMapping("/comments")
 	 	@ResponseBody
 	 	public ResponseEntity<Map<String, Object>> getComments(@RequestParam String championId) {
 	 	    try {
+	 	        System.out.println("🔍 댓글 조회 요청 - 챔피언 ID: " + championId);
+
 	 	        List<CommentDto> comments = commentMapper.selectCommentByChampionId(championId);
+	 	        System.out.println("✅ 불러온 댓글 개수: " + comments.size());
+
 	 	        Map<String, Object> response = new HashMap<>();
 	 	        response.put("comments", comments);
 	 	        return ResponseEntity.ok(response);
 	 	    } catch (Exception e) {
-	 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "댓글을 불러오지 못했습니다."));
+	 	        System.out.println("❌ 댓글 조회 중 오류 발생!");
+	 	        e.printStackTrace();  // 예외 로그 출력
+	 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	 	                .body(Map.of("message", "댓글을 불러오지 못했습니다."));
 	 	    }
 	 	}
+	 	
+	 	@DeleteMapping("/deleteComment")
+	 	@ResponseBody
+	 	public Map<String, Object> deleteComment(@RequestParam("id") int id) {
+	 	    System.out.println("삭제할 댓글 ID: " + id); // 삭제할 ID 로그 확인
+	 	    if (id <= 0) {
+	 	        return Collections.singletonMap("success", false);  // 잘못된 ID 처리
+	 	    }
+	 	    int result = commentService.deleteComment(id);  // 삭제된 행의 개수
+	 	    Map<String, Object> response = new HashMap<>();
+	 	    response.put("success", result > 0);  // 삭제된 행이 1개 이상이면 성공
+	 	    return response;
+	 	}
+
+
+	 	
+
 
 
 

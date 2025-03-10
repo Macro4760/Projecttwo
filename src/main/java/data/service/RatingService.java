@@ -26,6 +26,16 @@ public class RatingService {
 	    
 	    
 	    
+	    public Double getAverageRating(String championId) {
+	        return ratingMapper.getAverageRating(championId);
+	    }
+
+	    // 평점 개수 가져오기
+	    public Integer getRatingCount(String championId) {
+	        return ratingMapper.getRatingCount(championId);
+	    }
+
+
 
 	    public void insertRating(RatingDto ratingDto) {
 	        // champion_id가 실제로 존재하는지 확인
@@ -40,12 +50,12 @@ public class RatingService {
 	
 	
 	    public Map<String, Object> getRatingStats(String championId) {
-	        Map<String, Object> params = new HashMap<>();
-	        params.put("championId", championId);
+	        // championId는 String으로 넘어오므로 변환할 필요 없음
+	        // championId가 이미 String으로 되어 있으므로 그대로 사용
 
 	        // 평균 평점과 참여자 수를 데이터베이스에서 가져옴
-	        double avgRating = ratingMapper.getAverageRating(params);
-	        int ratingCount = ratingMapper.getRatingCount(params);
+	        Double avgRating = ratingMapper.getAverageRating(championId);  // championId는 String 타입
+	        Integer ratingCount = ratingMapper.getRatingCount(championId);  // championId는 String 타입
 
 	        // 결과를 Map에 담아서 반환
 	        Map<String, Object> result = new HashMap<>();
@@ -54,6 +64,8 @@ public class RatingService {
 
 	        return result;
 	    }
+
+
 	
 	 
 }

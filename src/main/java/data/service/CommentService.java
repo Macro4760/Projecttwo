@@ -44,7 +44,10 @@ public class CommentService {
     public List<CommentDto> getCommentsByChampionId(String championId) {
         return commentMapper.selectCommentByChampionId(championId);
     }
-
+    
+    public int deleteComment(int id) {
+        return commentMapper.deleteComment(id);
+    }
    
 }
 
