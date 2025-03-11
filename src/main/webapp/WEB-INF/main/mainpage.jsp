@@ -37,12 +37,12 @@
 <body>
 
 <div>
-<jsp:include page="../../layout/title.jsp"/><br>
-<div class="bg-blue-900 text-white p-6 rounded-lg shadow-lg">
+  <jsp:include page="../../layout/title.jsp"/><br>
+  <div class="bg-blue-900 text-white p-6 rounded-lg shadow-lg">
     <h1 class="text-3xl font-bold">Welcome</h1>
-    <p class="text-lg">Tailwind로 만든 남색 디자인</p>
+  </div>
 </div>
-</div>
+
 <form action="/summoner" method="get" class="flex justify-center items-center min-h-screen mt-50">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm border-2 border-blue-600">
         <h2 class="text-2xl font-bold text-center mb-4">소환사 검색</h2>
