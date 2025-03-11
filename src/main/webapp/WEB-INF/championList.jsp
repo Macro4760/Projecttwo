@@ -76,9 +76,12 @@
         }
     </style>
 </head>
-
 <body>
+<<<<<<< HEAD
 <jsp:include page="../layout/title.jsp"/>
+=======
+	<jsp:include page="../layout/title.jsp"></jsp:include>
+>>>>>>> branch 'main' of https://github.com/Macro4760/Projecttwo.git
     <h1>Champion List</h1>
 
     <!-- 검색 입력 필드 -->

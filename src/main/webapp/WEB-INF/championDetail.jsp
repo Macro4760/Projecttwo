@@ -318,8 +318,12 @@ textarea {
 </head>
 
 <body>
+<<<<<<< HEAD
 	<jsp:include page="../layout/title2.jsp" />
 
+=======
+<%-- <jsp:include page="../layout/title.jsp"></jsp:include> --%>
+>>>>>>> branch 'main' of https://github.com/Macro4760/Projecttwo.git
 	<div class="container">
 		<div class="champion-header">
 			<img
