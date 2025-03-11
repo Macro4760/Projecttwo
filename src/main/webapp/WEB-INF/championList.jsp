@@ -77,17 +77,9 @@ h1 {
 </style>
 </head>
 <body>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<jsp:include page="../layout/title.jsp"/>
-=======
 	<jsp:include page="../layout/title.jsp"></jsp:include>
->>>>>>> branch 'main' of https://github.com/Macro4760/Projecttwo.git
     <h1>Champion List</h1>
-=======
-	<jsp:include page="../layout/title.jsp" />
-	<h1>Champion List</h1>
->>>>>>> refs/remotes/origin/Junho
+
 
 	<!-- 검색 입력 필드 -->
 	<div style="text-align: center; margin-bottom: 20px;">

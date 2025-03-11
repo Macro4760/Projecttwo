@@ -318,16 +318,11 @@ textarea {
 </head>
 
 <body>
-<<<<<<< HEAD
-<<<<<<< HEAD
 	<jsp:include page="../layout/title2.jsp" />
 
 =======
 <%-- <jsp:include page="../layout/title.jsp"></jsp:include> --%>
->>>>>>> branch 'main' of https://github.com/Macro4760/Projecttwo.git
-=======
 
->>>>>>> refs/remotes/origin/Seho
 	<div class="container">
 		<div class="champion-header">
 			<img
