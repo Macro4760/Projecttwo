@@ -101,7 +101,7 @@
 					<c:set var="naverurl"
 						value="https://kr.object.ncloudstorage.com/bitcamp.bucket" />
 					<img src="${naverurl}/user/${sessionScope.loginphoto}"
-						class="profilephoto inline-block w-10 h-10 rounded-full"
+						class="profilephoto inline-block w-10 h-10 rounded-full" style="cursor:pointer;"
 						onerror="this.src='${naverurl}/user/noimage.png'">
 					<script>
 						$(".profilephoto").click(function() {

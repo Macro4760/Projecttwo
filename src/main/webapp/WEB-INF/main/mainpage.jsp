@@ -43,11 +43,15 @@
     <p class="text-lg">Tailwind로 만든 남색 디자인</p>
 </div>
 </div>
-<form action="/summoner" method="get">
-    <label for="summonerName">소환사 이름:</label>
-    <input type="text" id="summonerName" name="summonerName" required>
-    <button type="submit">검색</button>
+<form action="/summoner" method="get" class="flex justify-center items-center min-h-screen mt-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm border-2 border-blue-600">
+        <h2 class="text-2xl font-bold text-center mb-4">소환사 검색</h2>
+        <label for="summonerName" class="block text-lg mb-2">소환사 이름:</label>
+        <input type="text" id="summonerName" name="summonerName" required class="w-full p-2 border border-gray-300 rounded-lg mb-4">
+        <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition-colors">검색</button>
+    </div>
 </form>
+
 
 </body>
 </html>
