@@ -12,5 +12,5 @@ public class CommentDto {
 	private String championId;
 	private String userId;
 	private String comment;
-	private String createdAt;  // 댓글 생성 시간
+	private String createdate;  // 댓글 생성 시간
 }

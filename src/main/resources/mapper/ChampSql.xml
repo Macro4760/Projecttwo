@@ -33,7 +33,7 @@
     	VALUES (#{championId}, #{rating});
 	</insert>
 	<select id="getChampionComments" parameterType="String" resultType="data.dto.CommentDto">
-    	SELECT comment, created_at AS createdAt
+    	SELECT comment, created_at AS createdate
     	FROM champion_comments
     	WHERE champion_id = #{championId}
     	ORDER BY created_at DESC

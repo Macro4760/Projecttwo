@@ -29,6 +29,13 @@
     body * {
         font-family: 'Do-hyeon', sans-serif;
     }
+     .notice-banner {
+            background-color: #ff9900; /* 주황색 */
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -84,7 +91,14 @@
     </div>
   </div>
 </div>
-
+ <!-- 공지사항이 있을 경우, 상단에 띄워주기 -->
+    <c:if test="${not empty notice}">
+        <div class="notice-banner">
+            <a href="/board/view?id=${notice.idx}" class="text-white">
+                ${notice.title} - 클릭하면 상세보기
+            </a>
+        </div>
+    </c:if>
 <!-- 네비게이션 바 -->
 	<nav class="bg-blue-900 text-white p-4 shadow-lg">
 		<div class="container mx-auto flex items-center justify-between">
@@ -119,7 +133,6 @@
 					</c:if></li>
 				<li><a href="/user/form" class="hover:text-blue-300">회원가입</a></li>
 				<li><a href="/board/list" class="hover:text-blue-300">커뮤니티</a></li>
-				<li><a href="/shop" class="hover:text-blue-300">롤 굿즈샵</a></li>
 			</ul>
 		</div>
 	</nav>
