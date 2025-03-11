@@ -86,9 +86,9 @@
 </div>
 
 <!-- 네비게이션 바 -->
-	<nav class="bg-blue-900 text-black p-4 shadow-lg">
+	<nav class="bg-blue-900 text-white p-4 shadow-lg">
 		<div class="container mx-auto flex items-center justify-between">
-			<img src="https://kr.object.ncloudstorage.com/bitcamp.bucket/logo/logo2.webp" alt="Logo" class="h-12 mr-4">
+			<img src="../save/logo2.webp" alt="Logo" class="h-12 mr-4">
 
 			<!-- 제목을 클릭하면 메인 페이지(${root})로 이동 -->
 			<h1 class="text-4xl font-bold">
@@ -101,7 +101,7 @@
 					<c:set var="naverurl"
 						value="https://kr.object.ncloudstorage.com/bitcamp.bucket" />
 					<img src="${naverurl}/user/${sessionScope.loginphoto}"
-						class="profilephoto inline-block w-10 h-10 rounded-full" style="cursor:pointer;"
+						class="profilephoto inline-block w-10 h-10 rounded-full"
 						onerror="this.src='${naverurl}/user/noimage.png'">
 					<script>
 						$(".profilephoto").click(function() {

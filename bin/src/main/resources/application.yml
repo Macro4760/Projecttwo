@@ -20,8 +20,3 @@ mybatis:
   type-aliases-package: data.dto
   mapper-locations:
   - /mapper/**/*.xml
-
-#league of legend api key
-riot:
-  api:
-    key: "RGAPI-f39f6383-7fef-49c4-b959-89c315d0e2df"
