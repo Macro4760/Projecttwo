@@ -19,4 +19,6 @@ public class CommentDto {
 	private String comment;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private LocalDateTime createdAt;
+	private String createdate;  // 댓글 생성 시간
+
 }

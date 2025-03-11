@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.BoardMapper">
+	<select id="getTotalCount" resultType="int">
+		select count(*) from
+		nboard
+	</select>
+	<!-- 게시글 목록 조회 -->
+	<select id="getBoardList" resultType="BoardDtO">
+		SELECT * FROM nboard ORDER BY isNotice DESC, createdate DESC
+	</select>
+	<!-- 게시글 상세 조회 (조회수 증가 포함) -->
+	<select id="getSelectByIdx" resultType="BoardDto"
+		parameterType="int">
+		SELECT * FROM nboard WHERE idx = #{idx}
+	</select>
+
+	<update id="updateReadCount" parameterType="int">
+		update nboard set readcount=readcount+1 WHERE idx = #{idx}
+	</update>
+
+	<!-- 게시글 추가 -->
+	<insert id="insertBoard" parameterType="BoardDto">
+		INSERT INTO nboard (email, writer, title, content, isNotice)
+		VALUES (#{email}, #{writer}, #{title}, #{content}, #{isNotice})
+	</insert>
+	<select id="getPagingList" parameterType="Map"
+		resultType="BoardDto">
+		select * from nboard order by isNotice DESC, createdate
+		DESC limit #{start}, #{perpage}
+	</select>
+
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="BoardDto">
+		UPDATE nboard
+		SET title = #{title}, content = #{content}, isNotice = #{isNotice}
+		WHERE idx = #{idx}
+	</update>
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM nboard WHERE idx = #{idx}
+	</delete>
+	<select id="getSelectByEmail" parameterType="String"
+		resultType="BoardDto">
+		select * from nboard where email=#{email}
+	</select>
+	<!-- nboard.xml -->
+	<select id="getNoticeBoard" resultType="BoardDto">
+		SELECT * FROM nboard
+		WHERE isNotice = 1
+		ORDER BY createdate DESC
+		LIMIT 1
+	</select>
+</mapper>

@@ -20,31 +20,30 @@ public class LoginController {
             @RequestParam String loginemail,
             @RequestParam String loginpass,
             HttpSession session
-    		) 
-    {
+    ) {
         Map<String, String> map = new HashMap<>();
-        boolean b = userService.loginCheck(loginemail, loginpass);
+        boolean b=userService.loginCheck(loginemail, loginpass);
 
         if (b) {
             session.setMaxInactiveInterval(60 * 60 * 4);
             session.setAttribute("loginstatus", "success");
             session.setAttribute("loginemail", loginemail);
-            
 
             // 이메일에 해당하는 프로필 사진 및 닉네임 가져오기
             String photo = userService.getUserByEmail(loginemail).getPhoto();
             String nickname = userService.getUserByEmail(loginemail).getNickname();
+            String role = userService.getUserByEmail(loginemail).getRole();
 
+            // 세션에 추가
             session.setAttribute("loginphoto", photo);
             session.setAttribute("loginnickname", nickname); // 닉네임 저장
-
-            map.put("result", "success");
-        } else {
-            map.put("result", "fail");
+            session.setAttribute("role", role);  // 세션에 role 저장
         }
+            map.put("result", b?"success":"fail");
 
         return map;
     }
+
 
     // 로그아웃 처리
     @GetMapping("/user/logout")
@@ -53,6 +52,7 @@ public class LoginController {
         session.removeAttribute("loginemail");
         session.removeAttribute("loginnickname"); // 닉네임 삭제
         session.removeAttribute("loginphoto");
+        session.removeAttribute("role");  // role 삭제
 
         return "redirect:/"; // 로그아웃 후 메인페이지로 이동
     }

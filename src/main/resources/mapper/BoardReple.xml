@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.BoardRepleMapper">
+ <insert id="insertReple">
+    INSERT INTO nboardreple (idx, email, message, writeday)
+    VALUES (#{idx}, #{email}, #{message}, NOW());
+</insert>
+
+<select id="getRepleByIdx" resultType="BoardRepleDto">
+    SELECT *
+    FROM nboardreple
+    WHERE idx = #{idx}
+    ORDER BY writeday ASC;
+</select>
+
+<delete id="deleteReple">
+    DELETE FROM nboardreple WHERE num = #{num};
+</delete>
+</mapper>
